@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Give PayU Gateway 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-31 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Codex\n"
+
+msgid "Give PayU Gateway requires the Give plugin to be active."
+msgstr ""
+
+msgid "Plugin dependency missing"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "PayU"
+msgstr ""
+
+msgid "PayU Settings"
+msgstr ""
+
+msgid "Configure PayU credentials for sandbox or production payments."
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Sandbox"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "POS ID"
+msgstr ""
+
+msgid "OAuth client ID"
+msgstr ""
+
+msgid "OAuth client secret"
+msgstr ""
+
+msgid "Saved. Leave as *** to keep the current key."
+msgstr ""
+
+msgid "Second key (MD5)"
+msgstr ""
+
+msgid "Test connection"
+msgstr ""
+
+msgid "required"
+msgstr ""
+
+msgid "PayU settings were not saved. All PayU fields are required."
+msgstr ""
+
+msgid "Test PayU API access"
+msgstr ""
+
+msgid "Connection successful."
+msgstr ""
+
+msgid "Connection failed. Check mode and OAuth credentials."
+msgstr ""
+
+msgid "Donation - %s"
+msgstr ""
+
+msgid "Donation #%s"
+msgstr ""
+
+msgid "PayU payment verified (payment %s)."
+msgstr ""
+
+msgid "PayU payment verified."
+msgstr ""
+
+msgid "You will be redirected to PayU to complete the donation."
+msgstr ""
+
+msgid "PayU gateway is not configured."
+msgstr ""
+
+msgid "PayU order creation failed."
+msgstr ""

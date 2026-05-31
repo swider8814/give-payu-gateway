@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Give PayU Gateway 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-31 00:00+0000\n"
+"PO-Revision-Date: 2026-05-31 07:20+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Codex\n"
+
+msgid "Give PayU Gateway requires the Give plugin to be active."
+msgstr "Give PayU Gateway wymaga aktywnej wtyczki Give."
+
+msgid "Plugin dependency missing"
+msgstr "Brak wymaganej wtyczki"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "PayU"
+msgstr "PayU"
+
+msgid "PayU Settings"
+msgstr "Ustawienia PayU"
+
+msgid "Configure PayU credentials for sandbox or production payments."
+msgstr "Skonfiguruj dane dostępowe PayU dla płatności sandbox lub produkcyjnych."
+
+msgid "Mode"
+msgstr "Tryb"
+
+msgid "Sandbox"
+msgstr "Sandbox"
+
+msgid "Production"
+msgstr "Produkcja"
+
+msgid "POS ID"
+msgstr "POS ID"
+
+msgid "OAuth client ID"
+msgstr "OAuth client ID"
+
+msgid "OAuth client secret"
+msgstr "OAuth client secret"
+
+msgid "Saved. Leave as *** to keep the current key."
+msgstr "Zapisano. Pozostaw *** bez zmian, aby zachować obecny klucz."
+
+msgid "Second key (MD5)"
+msgstr "Drugi klucz (MD5)"
+
+msgid "Test connection"
+msgstr "Test połączenia"
+
+msgid "required"
+msgstr "wymagane"
+
+msgid "PayU settings were not saved. All PayU fields are required."
+msgstr "Ustawienia PayU nie zostały zapisane. Wszystkie pola PayU są wymagane."
+
+msgid "Test PayU API access"
+msgstr "Przetestuj dostęp API PayU"
+
+msgid "Connection successful."
+msgstr "Połączenie poprawne."
+
+msgid "Connection failed. Check mode and OAuth credentials."
+msgstr "Połączenie nieudane. Sprawdź tryb oraz dane OAuth."
+
+msgid "Donation - %s"
+msgstr "Darowizna - %s"
+
+msgid "Donation #%s"
+msgstr "Darowizna nr %s"
+
+msgid "PayU payment verified (payment %s)."
+msgstr "Płatność PayU została potwierdzona (płatność %s)."
+
+msgid "PayU payment verified."
+msgstr "Płatność PayU została potwierdzona."
+
+msgid "You will be redirected to PayU to complete the donation."
+msgstr "Zostaniesz przekierowany na stronę PayU, aby sfinalizować darowiznę."
+
+msgid "PayU gateway is not configured."
+msgstr "Bramka PayU nie została skonfigurowana."
+
+msgid "PayU order creation failed."
+msgstr "Utworzenie zamówienia PayU nie powiodło się."
