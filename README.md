@@ -4,7 +4,7 @@ PayU payment gateway for GiveWP/Give donations.
 
 ## Status
 
-Early release for one-time offsite donations:
+Release candidate for one-time offsite donations:
 
 - Give payment gateway ID: `payu`
 - Visual Donation Form Builder support
@@ -14,6 +14,7 @@ Early release for one-time offsite donations:
 - English source strings with Polish translation
 - local WordPress activation tested
 - sandbox payment flow tested successfully
+- production payment test pending PayU production account/domain setup
 
 ## Installation
 

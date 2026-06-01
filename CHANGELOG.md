@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc1 - 2026-06-01
+
+- Promoted PayU gateway to release candidate after successful sandbox payment verification.
+- Documented production payment test as pending.
+- Rebuilt release package for the release candidate.
+
 ## 0.1.2 - 2026-06-01
 
 - Marked PayU sandbox payment flow as tested successfully.
