@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0-rc2 - 2026-06-01
+
+- Hardened PayU webhook signature validation.
+- Added optional PayU order ID mismatch protection.
+- Cleared webhook processing lock after successful completion.
+- Rebuilt release package for the second release candidate.
+
 ## 1.0.0-rc1 - 2026-06-01
 
 - Promoted PayU gateway to release candidate after successful sandbox payment verification.
