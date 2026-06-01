@@ -13,7 +13,7 @@ Early release for one-time offsite donations:
 - REST webhook endpoint for order notification verification
 - English source strings with Polish translation
 - local WordPress activation tested
-- sandbox payment flow pending PayU sandbox credentials and public HTTPS webhook URL
+- sandbox payment flow tested successfully
 
 ## Installation
 
