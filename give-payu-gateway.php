@@ -485,12 +485,18 @@ function give_payu_gateway_verify_signature(WP_REST_Request $request): bool
         }
     }
 
-    if (strtoupper((string) ($parts['algorithm'] ?? '')) !== 'MD5' || empty($parts['signature'])) {
+    $signature = strtolower((string) ($parts['signature'] ?? ''));
+    if (
+        give_payu_gateway_options()['second_key'] === ''
+        || strtoupper((string) ($parts['algorithm'] ?? '')) !== 'MD5'
+        || strlen($signature) !== 32
+        || !ctype_xdigit($signature)
+    ) {
         return false;
     }
 
     $expected = md5($request->get_body() . give_payu_gateway_options()['second_key']);
-    return hash_equals($expected, strtolower((string) $parts['signature']));
+    return hash_equals($expected, $signature);
 }
 
 function give_payu_gateway_handle_status(WP_REST_Request $request): WP_REST_Response
@@ -549,6 +555,16 @@ function give_payu_gateway_handle_status(WP_REST_Request $request): WP_REST_Resp
         return new WP_REST_Response(['error' => 'POS mismatch'], 400);
     }
 
+    $expected_order_id = (string) get_post_meta($donation_id, '_give_payu_gateway_order_id', true);
+    if ($expected_order_id !== '' && !hash_equals($expected_order_id, (string) ($order['orderId'] ?? ''))) {
+        give_payu_gateway_log('Webhook rejected: order ID mismatch.', [
+            'donationId' => $donation_id,
+            'expectedOrderId' => $expected_order_id,
+            'receivedOrderId' => (string) ($order['orderId'] ?? ''),
+        ], 'error');
+        return new WP_REST_Response(['error' => 'Order ID mismatch'], 400);
+    }
+
     if ((string) ($order['status'] ?? '') !== 'COMPLETED') {
         give_payu_gateway_log('Webhook ignored: order is not completed.', [
             'donationId' => $donation_id,
@@ -598,6 +614,7 @@ function give_payu_gateway_handle_status(WP_REST_Request $request): WP_REST_Resp
 
     update_post_meta($donation_id, '_give_payu_gateway_order_id', (string) $order['orderId']);
     update_post_meta($donation_id, '_give_payu_gateway_payment_id', $payment_id);
+    delete_post_meta($donation_id, '_give_payu_gateway_webhook_lock');
 
     DonationNote::create([
         'donationId' => $donation_id,
