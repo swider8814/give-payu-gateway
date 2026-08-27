@@ -107,9 +107,18 @@ Donations > Settings > Payment Gateways
 - Log duplicate or non-completed callbacks as `warning`.
 - Include structured context, but never log raw secrets.
 
+## Tests
+
+- Run the suite with `php tests/run.php`; it needs nothing but PHP and exits non-zero on failure.
+- `tests/bootstrap.php` stubs the WordPress and GiveWP functions the plugin needs and loads the plugin file directly, so the tests exercise the real code.
+- Ports of `sanitize_text_field()`, `wp_validate_redirect()` and `give_clean()` live in the bootstrap because the plugin depends on their exact behaviour; keep them in sync with core.
+- Cover the pure logic that is expensive to verify by hand: webhook signature verification, amount conversion, `extOrderId` parsing, settings sanitization and donor return URL handling.
+- Keep the tests out of the release ZIP.
+
 ## Release Checklist
 
 - Run PHP syntax checks.
+- Run `php tests/run.php`.
 - Test API access in sandbox.
 - Run a full sandbox payment on a public HTTPS WordPress site.
 - Confirm status changes from `Pending` to `Complete`.

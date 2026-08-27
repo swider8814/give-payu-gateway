@@ -116,6 +116,16 @@ Before using production mode, confirm that:
 - **Test PayU API access** succeeds in production mode,
 - a small live payment is completed and verified end-to-end.
 
+## Tests
+
+Run the test suite with PHP only, no dependencies:
+
+```bash
+php tests/run.php
+```
+
+It covers webhook signature verification, amount conversion, `extOrderId` parsing, settings sanitization and donor return URL handling.
+
 ## Local Test Environment
 
 For local WordPress testing with Docker:
