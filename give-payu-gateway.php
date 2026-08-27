@@ -3,7 +3,7 @@
  * Plugin Name: Give PayU Gateway
  * Plugin URI: https://github.com/swider8814/give-payu-gateway
  * Description: PayU payment gateway for GiveWP/Give donations.
- * Version: 1.0.0-rc3
+ * Version: 1.0.0-rc4
  * Requires at least: 6.0
  * Requires PHP: 7.2
  * Requires Plugins: give
@@ -28,7 +28,7 @@ use Give\Framework\PaymentGateways\Commands\RedirectOffsite;
 use Give\Framework\PaymentGateways\PaymentGateway;
 
 const GIVE_PAYU_GATEWAY_OPTION = 'give_payu_gateway_options';
-const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc3';
+const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc4';
 const GIVE_PAYU_GATEWAY_TOKEN_TRANSIENT = 'give_payu_gateway_oauth_token';
 
 register_activation_hook(__FILE__, 'give_payu_gateway_activate');
@@ -525,6 +525,19 @@ function give_payu_gateway_donation_currency(Donation $donation): string
     }
 
     return function_exists('give_get_currency') ? strtoupper((string) give_get_currency()) : '';
+}
+
+function give_payu_gateway_plain_url($url): string
+{
+    $url = trim((string) $url);
+    if ($url === '') {
+        return '';
+    }
+
+    // Give passes these URLs rawurlencoded on the form builder path and plain on the legacy path.
+    $decoded = rawurldecode($url);
+
+    return preg_match('#^https?://#i', $decoded) ? $decoded : $url;
 }
 
 function give_payu_gateway_payment_exception(string $message): Exception
@@ -1042,9 +1055,19 @@ function give_payu_gateway_register_gateway_class(): void
             $amount = give_payu_gateway_amount_to_minor($donation->amount);
             $ext_order_id = sprintf('give-%d-%s', $donation->id, wp_generate_uuid4());
 
+            // Give builds the donation confirmation URLs (they carry the receipt key the
+            // confirmation page needs), so carry them through the return route.
+            $gateway_data = is_array($gatewayData) ? $gatewayData : (array) $gatewayData;
+            $success_url = give_payu_gateway_plain_url($gateway_data['successUrl'] ?? '');
+            $failed_url = give_payu_gateway_plain_url($gateway_data['failedUrl'] ?? ($gateway_data['cancelUrl'] ?? ''));
+
             $body = [
                 'notifyUrl' => rest_url('give-payu-gateway/v1/status'),
-                'continueUrl' => $this->generateSecureGatewayRouteUrl('handleReturnFromPayU', $donation->id, ['givewp-donation-id' => $donation->id]),
+                'continueUrl' => $this->generateSecureGatewayRouteUrl('handleReturnFromPayU', $donation->id, [
+                    'givewp-donation-id' => $donation->id,
+                    'givewp-return-url' => rawurlencode($success_url),
+                    'givewp-failed-url' => rawurlencode($failed_url),
+                ]),
                 'customerIp' => give_payu_gateway_customer_ip(),
                 'merchantPosId' => $options['pos_id'],
                 'description' => give_payu_gateway_transaction_description($donation),
@@ -1106,9 +1129,13 @@ function give_payu_gateway_register_gateway_class(): void
                 'error' => $failed ? sanitize_text_field((string) $queryParams['error']) : '',
             ], $failed ? 'warning' : 'info');
 
-            $url = $failed && function_exists('give_get_failed_transaction_uri')
+            $fallback = $failed && function_exists('give_get_failed_transaction_uri')
                 ? give_get_failed_transaction_uri()
                 : give_get_success_page_uri();
+
+            $url = trim((string) ($queryParams[$failed ? 'givewp-failed-url' : 'givewp-return-url'] ?? ''));
+            // Route args are not covered by the route signature, so keep the redirect on this site.
+            $url = wp_validate_redirect($url !== '' ? $url : $fallback, $fallback);
 
             if (class_exists(RedirectResponse::class)) {
                 return new RedirectResponse($url);

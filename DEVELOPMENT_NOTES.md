@@ -52,6 +52,8 @@ Donations > Settings > Payment Gateways
 - Generate a unique `extOrderId` containing the Give donation ID.
 - Store the `extOrderId` in donation meta before redirecting the donor.
 - Use a secure gateway route (`generateSecureGatewayRouteUrl`) as `continueUrl` and route the donor to the success or failed page based on the PayU `error` return parameter.
+- Redirect the returning donor to `$gatewayData['successUrl']` (and `failedUrl`/`cancelUrl` on failure), passed through the route arguments: those URLs carry the receipt key the donation confirmation page requires. Redirecting to a bare `give_get_success_page_uri()` makes the confirmation page report a missing donation identifier.
+- Give sends those URLs rawurlencoded on the form builder path and plain on the legacy path, so normalize them before use; route arguments are not covered by the route signature, so validate the redirect with `wp_validate_redirect()`.
 - Use `/wp-json/give-payu-gateway/v1/status` as `notifyUrl`.
 - Use the Give form title in the payment description when available.
 - Keep a fallback description using the donation ID.

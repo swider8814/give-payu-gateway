@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-rc4 - 2026-08-27
+
+- Fixed the donation confirmation page after returning from PayU: the donor was redirected to the bare success page, which reported a missing donation identifier. The gateway now carries Give's own success and cancel/failed URLs (they include the receipt key) through the secure return route, following the pattern used by Give's PayPal Standard and offsite example gateways.
+- Validated the return redirect against the site host so tampered route arguments cannot redirect donors off-site.
+
 ## 1.0.0-rc3 - 2026-08-27
 
 - Implemented real refunds through the PayU Refunds API; a failed refund request no longer marks the donation as refunded.
