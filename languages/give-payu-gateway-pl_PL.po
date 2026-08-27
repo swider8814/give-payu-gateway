@@ -1,16 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Give PayU Gateway 1.0.0-rc2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 00:00+0000\n"
-"PO-Revision-Date: 2026-06-01 00:00+0200\n"
+"Project-Id-Version: Give PayU Gateway 1.0.0-rc3\n"
+"Report-Msgid-Bugs-To: https://github.com/swider8814/give-payu-gateway/issues\n"
+"POT-Creation-Date: 2026-08-27 00:00+0000\n"
+"PO-Revision-Date: 2026-08-27 00:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pl_PL\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Codex\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Domain: give-payu-gateway\n"
 
 msgid "Give PayU Gateway requires the Give plugin to be active."
 msgstr "Give PayU Gateway wymaga aktywnej wtyczki Give."
@@ -64,7 +65,7 @@ msgid "PayU settings were not saved. All PayU fields are required."
 msgstr "Ustawienia PayU nie zostały zapisane. Wszystkie pola PayU są wymagane."
 
 msgid "Test PayU API access"
-msgstr "Przetestuj dostęp API PayU"
+msgstr "Przetestuj dostęp do API PayU"
 
 msgid "Connection successful."
 msgstr "Połączenie poprawne."
@@ -72,17 +73,43 @@ msgstr "Połączenie poprawne."
 msgid "Connection failed. Check mode and OAuth credentials."
 msgstr "Połączenie nieudane. Sprawdź tryb oraz dane OAuth."
 
+#. translators: %s: donation form title.
 msgid "Donation - %s"
 msgstr "Darowizna - %s"
 
+#. translators: %s: donation ID.
 msgid "Donation #%s"
 msgstr "Darowizna nr %s"
 
+#. translators: %s: PayU payment ID.
 msgid "PayU payment verified (payment %s)."
 msgstr "Płatność PayU została potwierdzona (płatność %s)."
 
 msgid "PayU payment verified."
 msgstr "Płatność PayU została potwierdzona."
+
+#. translators: %s: PayU order ID.
+msgid "PayU payment was cancelled or failed (PayU order %s)."
+msgstr "Płatność PayU została anulowana lub nie powiodła się (zamówienie PayU %s)."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund finalized (refund %s). Donation marked as refunded."
+msgstr "Zwrot PayU został sfinalizowany (zwrot %s). Darowizna została oznaczona jako zwrócona."
+
+msgid "PayU refund finalized. Donation marked as refunded."
+msgstr "Zwrot PayU został sfinalizowany. Darowizna została oznaczona jako zwrócona."
+
+#. translators: 1: PayU refund ID, 2: refunded amount with currency.
+msgid "PayU partial refund finalized (refund %1$s, amount %2$s). Verify the donation manually."
+msgstr "Częściowy zwrot PayU został sfinalizowany (zwrot %1$s, kwota %2$s). Zweryfikuj darowiznę ręcznie."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; donation status was restored to completed."
+msgstr "Zwrot PayU %s został anulowany. Środki nie wróciły do darczyńcy; status darowizny przywrócono na ukończony."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; verify the donation in the PayU merchant panel."
+msgstr "Zwrot PayU %s został anulowany. Środki nie wróciły do darczyńcy; zweryfikuj darowiznę w panelu sprzedawcy PayU."
 
 msgid "You will be redirected to PayU to complete the donation."
 msgstr "Zostaniesz przekierowany na stronę PayU, aby sfinalizować darowiznę."
@@ -90,5 +117,24 @@ msgstr "Zostaniesz przekierowany na stronę PayU, aby sfinalizować darowiznę."
 msgid "PayU gateway is not configured."
 msgstr "Bramka PayU nie została skonfigurowana."
 
+msgid "PayU donations support only the PLN currency."
+msgstr "Bramka PayU obsługuje wyłącznie darowizny w walucie PLN."
+
 msgid "PayU order creation failed."
 msgstr "Utworzenie zamówienia PayU nie powiodło się."
+
+msgid "PayU order ID is missing for this donation. Refund the payment in the PayU merchant panel."
+msgstr "Brak identyfikatora zamówienia PayU dla tej darowizny. Wykonaj zwrot w panelu sprzedawcy PayU."
+
+msgid "Donation refund"
+msgstr "Zwrot darowizny"
+
+msgid "PayU refund request failed. Refund the payment in the PayU merchant panel."
+msgstr "Żądanie zwrotu PayU nie powiodło się. Wykonaj zwrot w panelu sprzedawcy PayU."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund initiated (refund %s)."
+msgstr "Zwrot PayU został zainicjowany (zwrot %s)."
+
+msgid "PayU refund initiated."
+msgstr "Zwrot PayU został zainicjowany."

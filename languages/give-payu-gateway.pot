@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Give PayU Gateway 1.0.0-rc2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 00:00+0000\n"
+"Project-Id-Version: Give PayU Gateway 1.0.0-rc3\n"
+"Report-Msgid-Bugs-To: https://github.com/swider8814/give-payu-gateway/issues\n"
+"POT-Creation-Date: 2026-08-27 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Codex\n"
+"X-Domain: give-payu-gateway\n"
 
 msgid "Give PayU Gateway requires the Give plugin to be active."
 msgstr ""
@@ -71,16 +71,42 @@ msgstr ""
 msgid "Connection failed. Check mode and OAuth credentials."
 msgstr ""
 
+#. translators: %s: donation form title.
 msgid "Donation - %s"
 msgstr ""
 
+#. translators: %s: donation ID.
 msgid "Donation #%s"
 msgstr ""
 
+#. translators: %s: PayU payment ID.
 msgid "PayU payment verified (payment %s)."
 msgstr ""
 
 msgid "PayU payment verified."
+msgstr ""
+
+#. translators: %s: PayU order ID.
+msgid "PayU payment was cancelled or failed (PayU order %s)."
+msgstr ""
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund finalized (refund %s). Donation marked as refunded."
+msgstr ""
+
+msgid "PayU refund finalized. Donation marked as refunded."
+msgstr ""
+
+#. translators: 1: PayU refund ID, 2: refunded amount with currency.
+msgid "PayU partial refund finalized (refund %1$s, amount %2$s). Verify the donation manually."
+msgstr ""
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; donation status was restored to completed."
+msgstr ""
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; verify the donation in the PayU merchant panel."
 msgstr ""
 
 msgid "You will be redirected to PayU to complete the donation."
@@ -89,5 +115,24 @@ msgstr ""
 msgid "PayU gateway is not configured."
 msgstr ""
 
+msgid "PayU donations support only the PLN currency."
+msgstr ""
+
 msgid "PayU order creation failed."
+msgstr ""
+
+msgid "PayU order ID is missing for this donation. Refund the payment in the PayU merchant panel."
+msgstr ""
+
+msgid "Donation refund"
+msgstr ""
+
+msgid "PayU refund request failed. Refund the payment in the PayU merchant panel."
+msgstr ""
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund initiated (refund %s)."
+msgstr ""
+
+msgid "PayU refund initiated."
 msgstr ""

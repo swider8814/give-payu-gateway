@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.0-rc3 - 2026-08-27
+
+- Implemented real refunds through the PayU Refunds API; a failed refund request no longer marks the donation as refunded.
+- Added handling of PayU refund notifications (full refunds mark the donation as refunded; canceled refunds restore the donation status and add an admin note); refund notifications are processed idempotently under the per-donation lock.
+- Enforced PLN-only donations: non-PLN donations are rejected at order creation and the gateway is hidden on non-PLN forms (both legacy and Visual Form Builder forms).
+- Routed donors returning from PayU through a secure gateway return handler that picks the success or failed page based on the payment outcome.
+- Marked donations as failed when PayU reports a `CANCELED` order.
+- Hardened the webhook lock: token-based ownership check, value-scoped release, release on exceptions, and a 503 response on lock contention so PayU retries instead of dropping the notification.
+- Prevented replayed `COMPLETED` notifications from overwriting refunded or cancelled donations (donation state is re-checked under the lock).
+- Moved webhook logging after signature verification and reduced logged verification data to the compared fields only.
+- Acknowledged signed notifications for missing donations with HTTP 200 to stop PayU retry storms.
+- Cached the PayU OAuth token in a transient and retried once on 401 responses.
+- Used GiveWP exception types so donors see specific gateway error messages.
+- Used `give_get_ip()` for the PayU `customerIp` field so real client IPs are sent behind proxies/CDNs.
+- Reordered the settings fields to match the PayU panel (POS ID, second key, OAuth client ID, OAuth client secret).
+- Added an admin notice when GiveWP is inactive on WordPress versions without `Requires Plugins` support.
+- Added `uninstall.php` cleanup for options, the OAuth token transient, and webhook locks.
+- Added License, Plugin URI, and Domain Path plugin headers plus a GPL-2.0 LICENSE file.
+- Added translators comments, fixed the Polish translation headers, and added new refund/cancel strings.
+
 ## 1.0.0-rc2 - 2026-06-01
 
 - Hardened PayU webhook signature validation.

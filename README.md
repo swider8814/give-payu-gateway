@@ -9,8 +9,13 @@ Release candidate for one-time offsite donations:
 - Give payment gateway ID: `payu`
 - Visual Donation Form Builder support
 - sandbox and production modes
-- PayU order creation through OAuth and Orders API
+- PLN donations only (the gateway is hidden and rejected for other currencies)
+- PayU order creation through OAuth and Orders API (OAuth token cached between requests)
 - REST webhook endpoint for order notification verification
+- cancelled/failed PayU payments mark the donation as failed
+- refunds through the PayU Refunds API from the GiveWP donation screen
+- PayU refund notifications mark fully refunded donations as refunded
+- donors returning from PayU are routed to the success or failed page based on the payment outcome
 - English source strings with Polish translation
 - local WordPress activation tested
 - sandbox payment flow tested successfully
@@ -52,20 +57,20 @@ Set:
 
 - Mode: sandbox or production
 - POS ID: PayU merchant POS identifier
+- Second key (MD5)
 - OAuth client ID
 - OAuth client secret
-- Second key (MD5)
 
 Use **Test PayU API access** after saving credentials to verify that the selected mode and OAuth credentials are valid.
 
 ## PayU Field Mapping
 
-Use these values from the PayU panel:
+The settings fields follow the same order as the PayU panel:
 
-- POS identifier -> POS ID
+- POS ID (pos_id) -> POS ID
+- Second key (MD5) -> Second key (MD5)
 - OAuth protocol - client_id -> OAuth client ID
 - OAuth protocol - client_secret -> OAuth client secret
-- Second key -> Second key (MD5)
 
 ## Webhook
 
@@ -76,6 +81,8 @@ The plugin registers this REST endpoint:
 ```
 
 This URL is sent to PayU as `notifyUrl`. Payment completion is based on the PayU notification plus order verification through the PayU API, not on the return URL alone.
+
+The same endpoint also receives PayU refund notifications: a finalized full refund marks the donation as refunded, and a `CANCELED` order notification marks a pending donation as failed.
 
 For a full sandbox payment test, the WordPress site must be reachable by PayU over public HTTPS. A local `localhost` site can create orders, but it cannot receive the PayU status notification.
 
