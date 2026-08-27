@@ -3,7 +3,7 @@
  * Plugin Name: Give PayU Gateway
  * Plugin URI: https://github.com/swider8814/give-payu-gateway
  * Description: PayU payment gateway for GiveWP/Give donations.
- * Version: 1.0.0-rc7
+ * Version: 1.0.0-rc8
  * Requires at least: 6.0
  * Requires PHP: 7.2
  * Requires Plugins: give
@@ -28,7 +28,7 @@ use Give\Framework\PaymentGateways\Commands\RedirectOffsite;
 use Give\Framework\PaymentGateways\PaymentGateway;
 
 const GIVE_PAYU_GATEWAY_OPTION = 'give_payu_gateway_options';
-const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc7';
+const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc8';
 const GIVE_PAYU_GATEWAY_TOKEN_TRANSIENT = 'give_payu_gateway_oauth_token';
 
 register_activation_hook(__FILE__, 'give_payu_gateway_activate');
@@ -135,6 +135,7 @@ function give_payu_gateway_default_options(): array
         'client_id' => '',
         'client_secret' => '',
         'second_key' => '',
+        'description_prefix' => '',
     ];
 }
 
@@ -154,7 +155,14 @@ function give_payu_gateway_sanitize_options($input): array
         'client_id' => preg_replace('/\D+/', '', (string) ($input['client_id'] ?? '')),
         'client_secret' => in_array(($input['client_secret'] ?? ''), ['', '***'], true) ? $current['client_secret'] : sanitize_text_field($input['client_secret']),
         'second_key' => in_array(($input['second_key'] ?? ''), ['', '***'], true) ? $current['second_key'] : sanitize_text_field($input['second_key']),
+        'description_prefix' => give_payu_gateway_sanitize_description_prefix($input['description_prefix'] ?? ''),
     ];
+}
+
+function give_payu_gateway_sanitize_description_prefix($value): string
+{
+    // Kept short so the donation form title still fits in the PayU description.
+    return mb_substr(trim(sanitize_text_field((string) $value)), 0, 60);
 }
 
 function give_payu_gateway_give_settings(): array
@@ -177,6 +185,14 @@ function give_payu_gateway_give_settings(): array
                 'sandbox' => __('Sandbox', 'give-payu-gateway'),
                 'production' => __('Production', 'give-payu-gateway'),
             ],
+        ],
+        [
+            'id' => GIVE_PAYU_GATEWAY_OPTION . '[description_prefix]',
+            'name' => __('Payment description prefix', 'give-payu-gateway'),
+            'type' => 'text',
+            'default' => $options['description_prefix'],
+            'desc' => __('Opens the payment description PayU shows the donor, before the donation form title. Leave empty to use the default wording.', 'give-payu-gateway'),
+            'attributes' => ['maxlength' => '60'],
         ],
         [
             'id' => GIVE_PAYU_GATEWAY_OPTION . '[pos_id]',
@@ -260,6 +276,10 @@ function give_payu_gateway_sanitize_give_setting_value($value, array $option, $r
 
     if (in_array($key, ['client_secret', 'second_key'], true)) {
         return ($raw_value === '' || $raw_value === '***') ? $current[$key] : sanitize_text_field((string) $raw_value);
+    }
+
+    if ($key === 'description_prefix') {
+        return give_payu_gateway_sanitize_description_prefix($raw_value);
     }
 
     return null;
@@ -576,6 +596,15 @@ function give_payu_gateway_parse_donation_id(string $ext_order_id): int
 function give_payu_gateway_transaction_description(Donation $donation): string
 {
     $form_title = trim(wp_strip_all_tags((string) ($donation->formTitle ?? '')));
+    $prefix = give_payu_gateway_options()['description_prefix'];
+
+    if ($prefix !== '') {
+        $description = $form_title !== ''
+            ? $prefix . ' - ' . $form_title
+            : $prefix . ' #' . $donation->id;
+
+        return mb_substr($description, 0, 80);
+    }
 
     if ($form_title !== '') {
         /* translators: %s: donation form title. */

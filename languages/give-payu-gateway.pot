@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Give PayU Gateway 1.0.0-rc7\n"
+"Project-Id-Version: Give PayU Gateway 1.0.0-rc8\n"
 "Report-Msgid-Bugs-To: https://github.com/swider8814/give-payu-gateway/issues\n"
 "POT-Creation-Date: 2026-08-27 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -51,6 +51,12 @@ msgid "Saved. Leave as *** to keep the current key."
 msgstr ""
 
 msgid "Second key (MD5)"
+msgstr ""
+
+msgid "Payment description prefix"
+msgstr ""
+
+msgid "Opens the payment description PayU shows the donor, before the donation form title. Leave empty to use the default wording."
 msgstr ""
 
 msgid "Test connection"

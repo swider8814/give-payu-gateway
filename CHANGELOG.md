@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-rc8 - 2026-08-27
+
+- Added a "Payment description prefix" setting that opens the payment description PayU shows the donor, so the wording is no longer fixed in the code. With the setting empty the previous translated wording is used.
+
 ## 1.0.0-rc7 - 2026-08-27
 
 - Removed the PayU logo from the gateway fields shown under the selected payment method; it only repeated the logo already in the payment method row.

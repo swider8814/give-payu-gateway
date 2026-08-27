@@ -92,6 +92,14 @@ function update_option(string $name, $value): bool
  * part that matters here: it is why a URL cannot be passed through a Give
  * gateway route parameter.
  */
+function wp_strip_all_tags($text, bool $remove_breaks = false): string
+{
+    $text = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', (string) $text);
+    $text = strip_tags($text);
+
+    return $remove_breaks ? trim(preg_replace('/[\r\n\t ]+/', ' ', $text)) : trim($text);
+}
+
 function sanitize_text_field($str): string
 {
     $filtered = (string) $str;
@@ -229,4 +237,5 @@ function give_payu_test_summary(): void
         : "{$failures} OF {$checks} CHECKS FAILED\n";
 }
 
+require __DIR__ . '/stubs/give-models.php';
 require dirname(__DIR__) . '/give-payu-gateway.php';

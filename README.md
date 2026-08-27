@@ -56,6 +56,7 @@ Donations > Settings > Payment Gateways > PayU
 Set:
 
 - Mode: sandbox or production
+- Payment description prefix: optional
 - POS ID: PayU merchant POS identifier
 - Second key (MD5)
 - OAuth client ID
@@ -115,6 +116,18 @@ Before using production mode, confirm that:
 - production POS ID, OAuth client ID, OAuth client secret and second key are entered,
 - **Test PayU API access** succeeds in production mode,
 - a small live payment is completed and verified end-to-end.
+
+## Payment Description
+
+PayU shows a payment description to the donor, on the payment page and in its confirmation email. It is built as:
+
+```text
+<Payment description prefix> - <donation form title>
+```
+
+Set the prefix in the gateway settings, for example `SCh Tomy`, giving `SCh Tomy - Donation for religious worship`. When a donation has no form title, the donation ID is used instead: `SCh Tomy #3634`. With the setting empty the description opens with the translated word for donation.
+
+The description is capped at 80 characters, so keep the prefix short enough to leave room for the form title.
 
 ## PayU Logo
 
