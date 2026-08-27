@@ -1,49 +1,37 @@
 # Changelog
 
-## 1.0.0-rc8 - 2026-08-27
+## 1.0.0 - 2026-08-27
 
-- Added a "Payment description prefix" setting that opens the payment description PayU shows the donor, so the wording is no longer fixed in the code. With the setting empty the previous translated wording is used.
+First stable release. Sandbox and production payments verified end to end.
 
-## 1.0.0-rc7 - 2026-08-27
+### Added
 
-- Removed the PayU logo from the gateway fields shown under the selected payment method; it only repeated the logo already in the payment method row.
+- Refunds through the PayU Refunds API from the GiveWP donation screen, and handling of PayU refund notifications: a finalized full refund marks the donation as refunded, a canceled refund restores the donation status and records an admin note, and partial refunds are noted for manual review.
+- A "Payment description prefix" setting that opens the payment description PayU shows the donor, so the wording is not fixed in the code.
+- The PayU logo in the payment method selector, in place of Give's default gateway icon.
+- An admin notice when GiveWP is inactive on WordPress versions without `Requires Plugins` support.
+- `uninstall.php` cleanup for settings, the OAuth token and internal donation meta.
+- License, Plugin URI and Domain Path plugin headers, plus a GPL-2.0 LICENSE file.
+- A dependency-free test suite (`php tests/run.php`).
 
-## 1.0.0-rc6 - 2026-08-27
+### Changed
 
-- Replaced Give's default gear icon with the PayU logo in the payment method selector, and showed the same logo above the gateway message once PayU is selected. Give has no icon API for add-on gateways, so the row icon is restyled through Give's per-gateway CSS class.
-- The branding activates only while `assets/img/payu.svg` is present, so the gear is never removed without a logo to replace it.
-- Added a dependency-free test suite (`php tests/run.php`) covering webhook signature verification, amount conversion, `extOrderId` parsing, settings sanitization and donor return URL handling.
+- PLN-only donations are enforced: non-PLN donations are rejected at order creation and the gateway is hidden on non-PLN forms, both legacy and Visual Donation Form Builder.
+- Donors returning from PayU go through a secure gateway return route that sends them to the donation confirmation page on success and to the failed-donation page otherwise.
+- Donations are marked as failed when PayU reports a canceled order.
+- The PayU OAuth token is cached between requests and refreshed once on a 401.
+- Donor-facing gateway errors use GiveWP exception types, so the specific message is shown instead of a generic notice.
+- The PayU `customerIp` field uses `give_get_ip()`, so real donor IPs are sent from behind proxies and CDNs.
+- Settings fields follow the order used in the PayU panel, and saving them requires the GiveWP settings capability.
+- Webhook payload details are logged only after the signature is verified, and order verification logs are reduced to the compared fields.
 
-## 1.0.0-rc5 - 2026-08-27
+### Fixed
 
-- Fixed the return redirect landing on a 404: the confirmation URL was passed through the PayU return URL, but Give sanitizes route parameters with `give_clean()`, which strips percent-encoded sequences, so the URL came back mangled. The confirmation and cancel/failed URLs are now stored in donation meta and read back by donation ID.
-- Required the stored return URL to be an absolute same-site URL before redirecting, with a fallback to the Give success or failed page.
-- Removed the stored return URLs on uninstall.
-
-## 1.0.0-rc4 - 2026-08-27
-
-- Fixed the donation confirmation page after returning from PayU: the donor was redirected to the bare success page, which reported a missing donation identifier. The gateway now carries Give's own success and cancel/failed URLs (they include the receipt key) through the secure return route, following the pattern used by Give's PayPal Standard and offsite example gateways.
-- Validated the return redirect against the site host so tampered route arguments cannot redirect donors off-site.
-
-## 1.0.0-rc3 - 2026-08-27
-
-- Implemented real refunds through the PayU Refunds API; a failed refund request no longer marks the donation as refunded.
-- Added handling of PayU refund notifications (full refunds mark the donation as refunded; canceled refunds restore the donation status and add an admin note); refund notifications are processed idempotently under the per-donation lock.
-- Enforced PLN-only donations: non-PLN donations are rejected at order creation and the gateway is hidden on non-PLN forms (both legacy and Visual Form Builder forms).
-- Routed donors returning from PayU through a secure gateway return handler that picks the success or failed page based on the payment outcome.
-- Marked donations as failed when PayU reports a `CANCELED` order.
-- Hardened the webhook lock: token-based ownership check, value-scoped release, release on exceptions, and a 503 response on lock contention so PayU retries instead of dropping the notification.
-- Prevented replayed `COMPLETED` notifications from overwriting refunded or cancelled donations (donation state is re-checked under the lock).
-- Moved webhook logging after signature verification and reduced logged verification data to the compared fields only.
-- Acknowledged signed notifications for missing donations with HTTP 200 to stop PayU retry storms.
-- Cached the PayU OAuth token in a transient and retried once on 401 responses.
-- Used GiveWP exception types so donors see specific gateway error messages.
-- Used `give_get_ip()` for the PayU `customerIp` field so real client IPs are sent behind proxies/CDNs.
-- Reordered the settings fields to match the PayU panel (POS ID, second key, OAuth client ID, OAuth client secret).
-- Added an admin notice when GiveWP is inactive on WordPress versions without `Requires Plugins` support.
-- Added `uninstall.php` cleanup for options, the OAuth token transient, and webhook locks.
-- Added License, Plugin URI, and Domain Path plugin headers plus a GPL-2.0 LICENSE file.
-- Added translators comments, fixed the Polish translation headers, and added new refund/cancel strings.
+- Refunds no longer report success without reaching PayU, so a failed refund request cannot leave a donation marked as refunded.
+- Non-PLN donations can no longer complete against a PLN PayU order.
+- The webhook lock is released on failure and is owned per request, lock contention is answered with a retryable status, and a replayed completion notification can no longer overwrite a refunded or cancelled donation.
+- Signed notifications for donations that no longer exist are acknowledged instead of being retried by PayU for days.
+- Polish translation files carry the correct language and plural headers.
 
 ## 1.0.0-rc2 - 2026-06-01
 

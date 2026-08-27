@@ -4,7 +4,7 @@ PayU payment gateway for GiveWP/Give donations.
 
 ## Status
 
-Release candidate for one-time offsite donations:
+Stable release for one-time offsite donations:
 
 - Give payment gateway ID: `payu`
 - Visual Donation Form Builder support
@@ -16,17 +16,18 @@ Release candidate for one-time offsite donations:
 - refunds through the PayU Refunds API from the GiveWP donation screen
 - PayU refund notifications mark fully refunded donations as refunded
 - donors returning from PayU are routed to the success or failed page based on the payment outcome
+- configurable payment description prefix
+- PayU logo in the payment method selector
 - English source strings with Polish translation
-- local WordPress activation tested
-- sandbox payment flow tested successfully
-- production payment test pending PayU production account/domain setup
+- sandbox payment flow verified end to end
+- production payment verified end to end
 
 ## Installation
 
-Download the latest release ZIP:
+Download the ZIP attached to the latest release:
 
 ```text
-https://github.com/swider8814/give-payu-gateway/releases/latest/download/give-payu-gateway.zip
+https://github.com/swider8814/give-payu-gateway/releases/latest
 ```
 
 In WordPress go to:
@@ -35,7 +36,7 @@ In WordPress go to:
 Plugins > Add New > Upload Plugin
 ```
 
-Upload `give-payu-gateway.zip`, install it, then activate **Give PayU Gateway**.
+Upload `give-payu-gateway-<version>.zip`, install it, then activate **Give PayU Gateway**.
 
 Alternatively, copy this directory to:
 

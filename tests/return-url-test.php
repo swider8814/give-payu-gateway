@@ -2,11 +2,12 @@
 /**
  * Donor return URL handling.
  *
- * Regression cover for the 1.0.0-rc4 bug: the donation confirmation URL was
- * passed through the PayU return URL, but Give sanitizes gateway route params
- * with give_clean() (sanitize_text_field), which strips percent-encoded
- * sequences. PayU returns the continueUrl re-encoded, so the URL came back with
- * every %XX removed and resolved into a 404 against the site root.
+ * Regression cover for a bug found in pre-release testing: the donation
+ * confirmation URL was passed through the PayU return URL, but Give sanitizes
+ * gateway route params with give_clean() (sanitize_text_field), which strips
+ * percent-encoded sequences. PayU returns the continueUrl re-encoded, so the
+ * URL came back with every %XX removed and resolved into a 404 against the
+ * site root.
  */
 
 $confirmation = 'https://example.test/support-us?givewp-event=donation-completed'
@@ -58,13 +59,13 @@ give_payu_test_check(
     $fallback
 );
 give_payu_test_check(
-    'the rc4 mangled value falls back instead of producing a 404',
+    'a mangled value falls back instead of producing a 404',
     give_payu_gateway_safe_return_url('https20y.schtomy.plsupport-usgivewp-eventdonation-completed', $fallback),
     $fallback
 );
 
 give_payu_test_section('why the URL cannot travel in the return URL (Give sanitizes route params)');
-$encoded_param = rawurlencode($confirmation);            // what rc4 put in the return URL
+$encoded_param = rawurlencode($confirmation);            // the URL as a route parameter
 $returned_by_payu = rawurlencode($encoded_param);        // PayU hands the continueUrl back re-encoded
 $after_php_decode = rawurldecode($returned_by_payu);     // PHP decodes $_GET once
 $after_give_clean = give_clean($after_php_decode);       // Give sanitizes the route params
