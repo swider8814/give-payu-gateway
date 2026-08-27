@@ -103,7 +103,7 @@ Donations > Settings > Payment Gateways
 - Restyle the row icon instead: Give puts a `givewp-fields-gateways__gateway--<gateway-id>` class on the option and renders the glyph in `givewp-fields-gateways__gateway__icon`, so dropping its `::before` content and painting a background image replaces the icon for this gateway only.
 - Enqueue that stylesheet from the gateway's `enqueueScript()`, which Give calls per enabled gateway while rendering the form.
 - Keep the branding behind a `file_exists()` check on the logo asset, so a missing file leaves Give's own icon in place instead of an empty box.
-- Pass the logo URL to the JS gateway through `formSettings()` to show it inside the gateway's own fields as well; that part is officially supported and is how Give's PayPal Standard gateway brands itself.
+- Keep the branding to the selector row. Rendering the logo inside the gateway's own fields is officially supported (`formSettings()` plus the JS `Fields()` component, as Give's PayPal Standard gateway does), but it only repeats the row icon a few pixels below it.
 - Ship official provider artwork as a file in the repository; do not approximate a trademark.
 
 ## Logging

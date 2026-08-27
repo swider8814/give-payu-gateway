@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-rc7 - 2026-08-27
+
+- Removed the PayU logo from the gateway fields shown under the selected payment method; it only repeated the logo already in the payment method row.
+
 ## 1.0.0-rc6 - 2026-08-27
 
 - Replaced Give's default gear icon with the PayU logo in the payment method selector, and showed the same logo above the gateway message once PayU is selected. Give has no icon API for add-on gateways, so the row icon is restyled through Give's per-gateway CSS class.

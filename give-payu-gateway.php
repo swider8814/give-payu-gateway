@@ -3,7 +3,7 @@
  * Plugin Name: Give PayU Gateway
  * Plugin URI: https://github.com/swider8814/give-payu-gateway
  * Description: PayU payment gateway for GiveWP/Give donations.
- * Version: 1.0.0-rc6
+ * Version: 1.0.0-rc7
  * Requires at least: 6.0
  * Requires PHP: 7.2
  * Requires Plugins: give
@@ -28,7 +28,7 @@ use Give\Framework\PaymentGateways\Commands\RedirectOffsite;
 use Give\Framework\PaymentGateways\PaymentGateway;
 
 const GIVE_PAYU_GATEWAY_OPTION = 'give_payu_gateway_options';
-const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc6';
+const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc7';
 const GIVE_PAYU_GATEWAY_TOKEN_TRANSIENT = 'give_payu_gateway_oauth_token';
 
 register_activation_hook(__FILE__, 'give_payu_gateway_activate');
@@ -1057,7 +1057,6 @@ function give_payu_gateway_register_gateway_class(): void
         {
             return [
                 'message' => __('You will be redirected to PayU to complete the donation.', 'give-payu-gateway'),
-                'logoUrl' => give_payu_gateway_logo_url(),
             ];
         }
 
