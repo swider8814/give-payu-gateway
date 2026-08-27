@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc5 - 2026-08-27
+
+- Fixed the return redirect landing on a 404: the confirmation URL was passed through the PayU return URL, but Give sanitizes route parameters with `give_clean()`, which strips percent-encoded sequences, so the URL came back mangled. The confirmation and cancel/failed URLs are now stored in donation meta and read back by donation ID.
+- Required the stored return URL to be an absolute same-site URL before redirecting, with a fallback to the Give success or failed page.
+- Removed the stored return URLs on uninstall.
+
 ## 1.0.0-rc4 - 2026-08-27
 
 - Fixed the donation confirmation page after returning from PayU: the donor was redirected to the bare success page, which reported a missing donation identifier. The gateway now carries Give's own success and cancel/failed URLs (they include the receipt key) through the secure return route, following the pattern used by Give's PayPal Standard and offsite example gateways.

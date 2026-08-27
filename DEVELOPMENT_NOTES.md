@@ -52,8 +52,10 @@ Donations > Settings > Payment Gateways
 - Generate a unique `extOrderId` containing the Give donation ID.
 - Store the `extOrderId` in donation meta before redirecting the donor.
 - Use a secure gateway route (`generateSecureGatewayRouteUrl`) as `continueUrl` and route the donor to the success or failed page based on the PayU `error` return parameter.
-- Redirect the returning donor to `$gatewayData['successUrl']` (and `failedUrl`/`cancelUrl` on failure), passed through the route arguments: those URLs carry the receipt key the donation confirmation page requires. Redirecting to a bare `give_get_success_page_uri()` makes the confirmation page report a missing donation identifier.
-- Give sends those URLs rawurlencoded on the form builder path and plain on the legacy path, so normalize them before use; route arguments are not covered by the route signature, so validate the redirect with `wp_validate_redirect()`.
+- Redirect the returning donor to `$gatewayData['successUrl']` (and `failedUrl`/`cancelUrl` on failure): those URLs carry the receipt key the donation confirmation page requires. Redirecting to a bare `give_get_success_page_uri()` makes the confirmation page report a missing donation identifier.
+- Store those URLs in donation meta and read them back by donation ID in the return handler. Do not pass them through the return URL: Give sanitizes route params with `give_clean()` (`sanitize_text_field`), which strips percent-encoded sequences, and PayU returns the `continueUrl` re-encoded — an encoded URL comes back with every `%XX` removed and resolves into a 404.
+- Give sends those URLs rawurlencoded on the form builder path and plain on the legacy path, so normalize them before storing.
+- Validate the stored URL before redirecting (absolute, same host) and fall back to the Give page, so a mangled or tampered value cannot send donors to a 404 or off-site.
 - Use `/wp-json/give-payu-gateway/v1/status` as `notifyUrl`.
 - Use the Give form title in the payment description when available.
 - Keep a fallback description using the donation ID.

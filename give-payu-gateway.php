@@ -3,7 +3,7 @@
  * Plugin Name: Give PayU Gateway
  * Plugin URI: https://github.com/swider8814/give-payu-gateway
  * Description: PayU payment gateway for GiveWP/Give donations.
- * Version: 1.0.0-rc4
+ * Version: 1.0.0-rc5
  * Requires at least: 6.0
  * Requires PHP: 7.2
  * Requires Plugins: give
@@ -28,7 +28,7 @@ use Give\Framework\PaymentGateways\Commands\RedirectOffsite;
 use Give\Framework\PaymentGateways\PaymentGateway;
 
 const GIVE_PAYU_GATEWAY_OPTION = 'give_payu_gateway_options';
-const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc4';
+const GIVE_PAYU_GATEWAY_VERSION = '1.0.0-rc5';
 const GIVE_PAYU_GATEWAY_TOKEN_TRANSIENT = 'give_payu_gateway_oauth_token';
 
 register_activation_hook(__FILE__, 'give_payu_gateway_activate');
@@ -538,6 +538,19 @@ function give_payu_gateway_plain_url($url): string
     $decoded = rawurldecode($url);
 
     return preg_match('#^https?://#i', $decoded) ? $decoded : $url;
+}
+
+function give_payu_gateway_safe_return_url(string $url, string $fallback): string
+{
+    $url = trim($url);
+
+    // Require an absolute URL: a mangled or relative value would resolve against the
+    // site root and land the donor on a 404 instead of the confirmation page.
+    if ($url === '' || !preg_match('#^https?://[^/]+#i', $url)) {
+        return $fallback;
+    }
+
+    return wp_validate_redirect($url, $fallback);
 }
 
 function give_payu_gateway_payment_exception(string $message): Exception
@@ -1056,7 +1069,9 @@ function give_payu_gateway_register_gateway_class(): void
             $ext_order_id = sprintf('give-%d-%s', $donation->id, wp_generate_uuid4());
 
             // Give builds the donation confirmation URLs (they carry the receipt key the
-            // confirmation page needs), so carry them through the return route.
+            // confirmation page needs). Keep them in donation meta rather than in the return
+            // URL: Give sanitizes route params with give_clean(), which strips percent-encoded
+            // sequences, so an encoded URL would not survive the round trip through PayU.
             $gateway_data = is_array($gatewayData) ? $gatewayData : (array) $gatewayData;
             $success_url = give_payu_gateway_plain_url($gateway_data['successUrl'] ?? '');
             $failed_url = give_payu_gateway_plain_url($gateway_data['failedUrl'] ?? ($gateway_data['cancelUrl'] ?? ''));
@@ -1065,8 +1080,6 @@ function give_payu_gateway_register_gateway_class(): void
                 'notifyUrl' => rest_url('give-payu-gateway/v1/status'),
                 'continueUrl' => $this->generateSecureGatewayRouteUrl('handleReturnFromPayU', $donation->id, [
                     'givewp-donation-id' => $donation->id,
-                    'givewp-return-url' => rawurlencode($success_url),
-                    'givewp-failed-url' => rawurlencode($failed_url),
                 ]),
                 'customerIp' => give_payu_gateway_customer_ip(),
                 'merchantPosId' => $options['pos_id'],
@@ -1104,6 +1117,14 @@ function give_payu_gateway_register_gateway_class(): void
 
             update_post_meta($donation->id, '_give_payu_gateway_ext_order_id', $ext_order_id);
 
+            if ($success_url !== '') {
+                update_post_meta($donation->id, '_give_payu_gateway_success_url', $success_url);
+            }
+
+            if ($failed_url !== '') {
+                update_post_meta($donation->id, '_give_payu_gateway_failed_url', $failed_url);
+            }
+
             $created_order_id = sanitize_text_field((string) ($created['orderId'] ?? ''));
             if ($created_order_id !== '') {
                 update_post_meta($donation->id, '_give_payu_gateway_order_id', $created_order_id);
@@ -1133,9 +1154,10 @@ function give_payu_gateway_register_gateway_class(): void
                 ? give_get_failed_transaction_uri()
                 : give_get_success_page_uri();
 
-            $url = trim((string) ($queryParams[$failed ? 'givewp-failed-url' : 'givewp-return-url'] ?? ''));
-            // Route args are not covered by the route signature, so keep the redirect on this site.
-            $url = wp_validate_redirect($url !== '' ? $url : $fallback, $fallback);
+            $stored = $donation_id
+                ? (string) get_post_meta($donation_id, $failed ? '_give_payu_gateway_failed_url' : '_give_payu_gateway_success_url', true)
+                : '';
+            $url = give_payu_gateway_safe_return_url($stored, $fallback);
 
             if (class_exists(RedirectResponse::class)) {
                 return new RedirectResponse($url);

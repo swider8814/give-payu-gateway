@@ -15,3 +15,5 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 delete_option('give_payu_gateway_options');
 delete_transient('give_payu_gateway_oauth_token');
 delete_post_meta_by_key('_give_payu_gateway_webhook_lock');
+delete_post_meta_by_key('_give_payu_gateway_success_url');
+delete_post_meta_by_key('_give_payu_gateway_failed_url');
