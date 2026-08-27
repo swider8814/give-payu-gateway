@@ -45,6 +45,16 @@ function plugin_basename(): string
     return 'give-payu-gateway/give-payu-gateway.php';
 }
 
+function plugin_dir_path(string $file): string
+{
+    return rtrim(str_replace('\\', '/', dirname($file)), '/') . '/';
+}
+
+function plugin_dir_url(): string
+{
+    return 'https://example.test/wp-content/plugins/give-payu-gateway/';
+}
+
 function home_url(): string
 {
     return $GLOBALS['give_payu_test']['home'];

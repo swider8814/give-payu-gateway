@@ -2,11 +2,21 @@
     let settings = {};
 
     function Fields() {
-        return window.wp.element.createElement(
-            'div',
-            {className: 'give-payu-gateway-help-text'},
-            window.wp.element.createElement('p', {style: {marginBottom: 0}}, settings.message)
-        );
+        const el = window.wp.element.createElement;
+        const children = [];
+
+        if (settings.logoUrl) {
+            children.push(el('img', {
+                key: 'logo',
+                src: settings.logoUrl,
+                alt: 'PayU',
+                className: 'give-payu-gateway-logo',
+            }));
+        }
+
+        children.push(el('p', {key: 'message', style: {marginBottom: 0}}, settings.message));
+
+        return el('div', {className: 'give-payu-gateway-help-text'}, children);
     }
 
     window.givewp.gateways.register({

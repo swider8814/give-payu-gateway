@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc6 - 2026-08-27
+
+- Replaced Give's default gear icon with the PayU logo in the payment method selector, and showed the same logo above the gateway message once PayU is selected. Give has no icon API for add-on gateways, so the row icon is restyled through Give's per-gateway CSS class.
+- The branding activates only while `assets/img/payu.svg` is present, so the gear is never removed without a logo to replace it.
+- Added a dependency-free test suite (`php tests/run.php`) covering webhook signature verification, amount conversion, `extOrderId` parsing, settings sanitization and donor return URL handling.
+
 ## 1.0.0-rc5 - 2026-08-27
 
 - Fixed the return redirect landing on a 404: the confirmation URL was passed through the PayU return URL, but Give sanitizes route parameters with `give_clean()`, which strips percent-encoded sequences, so the URL came back mangled. The confirmation and cancel/failed URLs are now stored in donation meta and read back by donation ID.

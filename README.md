@@ -116,6 +116,16 @@ Before using production mode, confirm that:
 - **Test PayU API access** succeeds in production mode,
 - a small live payment is completed and verified end-to-end.
 
+## PayU Logo
+
+The gateway shows the PayU logo instead of Give's default gateway icon when this file is present:
+
+```text
+assets/img/payu.svg
+```
+
+Use the official PayU logo from the PayU brand assets. Without the file, Give's own icon is used and nothing breaks.
+
 ## Tests
 
 Run the test suite with PHP only, no dependencies:

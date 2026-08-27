@@ -63,6 +63,16 @@ give_payu_test_check(
     0
 );
 
+give_payu_test_section('give_payu_gateway_logo_url(): branding follows the shipped asset');
+$logo_present = file_exists(dirname(__DIR__) . '/assets/img/payu.svg');
+give_payu_test_check(
+    $logo_present
+        ? 'the logo URL is exposed while assets/img/payu.svg ships'
+        : 'no logo URL while assets/img/payu.svg is absent, so Give keeps its own icon',
+    give_payu_gateway_logo_url() !== '',
+    $logo_present
+);
+
 give_payu_test_section('give_payu_gateway_sanitize_options(): saved credentials');
 give_payu_test_set_options([
     'mode' => 'production',

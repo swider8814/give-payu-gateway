@@ -1,0 +1,28 @@
+/*
+ * Give renders a hard-coded Font Awesome icon for each gateway in the payment
+ * method selector and falls back to a gear for gateways it does not recognise;
+ * there is no API for an add-on to supply its own icon. Replace the glyph with
+ * the PayU mark on this gateway's row only.
+ *
+ * This stylesheet is enqueued only when assets/img/payu.svg exists, so the
+ * gear is never removed without a logo to put in its place.
+ */
+
+.givewp-fields-gateways__gateway--payu .givewp-fields-gateways__gateway__icon::before {
+    content: none;
+}
+
+.givewp-fields-gateways__gateway--payu .givewp-fields-gateways__gateway__icon {
+    display: inline-block;
+    width: 3.25rem;
+    height: 1.25rem;
+    background: url("../img/payu.svg") right center / contain no-repeat;
+}
+
+/* The same mark inside the gateway's own fields, once the option is selected. */
+.give-payu-gateway-logo {
+    display: block;
+    width: auto;
+    height: 1.5rem;
+    margin: 0 0 0.5rem;
+}
