@@ -13,10 +13,13 @@
 }
 
 .givewp-fields-gateways__gateway--payu .givewp-fields-gateways__gateway__icon {
+    /* The icon is a flex item sized by its glyph, so give the box its own
+       dimensions and keep it from shrinking. The wordmark is 2:1. */
+    flex: 0 0 auto;
     display: inline-block;
-    width: 3.25rem;
-    height: 1.25rem;
-    background: url("../img/payu.svg") right center / contain no-repeat;
+    width: 3rem;
+    height: 1.5rem;
+    background: url("../img/payu.svg") center / contain no-repeat;
 }
 
 /* The same mark inside the gateway's own fields, once the option is selected. */
@@ -24,5 +27,14 @@
     display: block;
     width: auto;
     height: 1.5rem;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.75rem;
 }
+
+/*
+ * assets/img/payu-white.svg ships alongside for dark form designs. To use it,
+ * override the rule above in the theme:
+ *
+ *   .givewp-fields-gateways__gateway--payu .givewp-fields-gateways__gateway__icon {
+ *       background-image: url("../img/payu-white.svg");
+ *   }
+ */
