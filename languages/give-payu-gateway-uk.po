@@ -1,0 +1,146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Give PayU Gateway 1.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/swider8814/give-payu-gateway/issues\n"
+"POT-Creation-Date: 2026-08-27 00:00+0000\n"
+"PO-Revision-Date: 2026-09-26 00:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Domain: give-payu-gateway\n"
+
+msgid "Give PayU Gateway requires the Give plugin to be active."
+msgstr "Для роботи Give PayU Gateway потрібен активний плагін Give."
+
+msgid "Plugin dependency missing"
+msgstr "Відсутній потрібний плагін"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "PayU"
+msgstr "PayU"
+
+msgid "PayU Settings"
+msgstr "Налаштування PayU"
+
+msgid "Configure PayU credentials for sandbox or production payments."
+msgstr "Налаштуйте облікові дані PayU для тестових (sandbox) або робочих платежів."
+
+msgid "Mode"
+msgstr "Режим"
+
+msgid "Sandbox"
+msgstr "Sandbox"
+
+msgid "Production"
+msgstr "Робочий"
+
+msgid "POS ID"
+msgstr "POS ID"
+
+msgid "OAuth client ID"
+msgstr "OAuth client ID"
+
+msgid "OAuth client secret"
+msgstr "OAuth client secret"
+
+msgid "Saved. Leave as *** to keep the current key."
+msgstr "Збережено. Залиште *** без змін, щоб зберегти поточний ключ."
+
+msgid "Second key (MD5)"
+msgstr "Другий ключ (MD5)"
+
+msgid "Payment description prefix"
+msgstr "Префікс опису платежу"
+
+msgid "Opens the payment description PayU shows the donor, before the donation form title. Leave empty to use the default wording."
+msgstr "Початок опису платежу, який PayU показує донору, перед назвою форми пожертви. Залиште порожнім, щоб використати стандартне формулювання."
+
+msgid "Test connection"
+msgstr "Перевірити з'єднання"
+
+msgid "required"
+msgstr "обов'язково"
+
+msgid "PayU settings were not saved. All PayU fields are required."
+msgstr "Налаштування PayU не збережено. Усі поля PayU обов'язкові."
+
+msgid "Test PayU API access"
+msgstr "Перевірити доступ до API PayU"
+
+msgid "Connection successful."
+msgstr "З'єднання успішне."
+
+msgid "Connection failed. Check mode and OAuth credentials."
+msgstr "Не вдалося з'єднатися. Перевірте режим і облікові дані OAuth."
+
+#. translators: %s: donation form title.
+msgid "Donation - %s"
+msgstr "Пожертва - %s"
+
+#. translators: %s: donation ID.
+msgid "Donation #%s"
+msgstr "Пожертва № %s"
+
+#. translators: %s: PayU payment ID.
+msgid "PayU payment verified (payment %s)."
+msgstr "Платіж PayU підтверджено (платіж %s)."
+
+msgid "PayU payment verified."
+msgstr "Платіж PayU підтверджено."
+
+#. translators: %s: PayU order ID.
+msgid "PayU payment was cancelled or failed (PayU order %s)."
+msgstr "Платіж PayU скасовано або він не вдався (замовлення PayU %s)."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund finalized (refund %s). Donation marked as refunded."
+msgstr "Повернення коштів PayU завершено (повернення %s). Пожертву позначено як повернену."
+
+msgid "PayU refund finalized. Donation marked as refunded."
+msgstr "Повернення коштів PayU завершено. Пожертву позначено як повернену."
+
+#. translators: 1: PayU refund ID, 2: refunded amount with currency.
+msgid "PayU partial refund finalized (refund %1$s, amount %2$s). Verify the donation manually."
+msgstr "Часткове повернення коштів PayU завершено (повернення %1$s, сума %2$s). Перевірте пожертву вручну."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; donation status was restored to completed."
+msgstr "Повернення коштів PayU %s скасовано. Кошти не повернуто донору; статус пожертви відновлено на «завершено»."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund %s was canceled. The donor was not refunded; verify the donation in the PayU merchant panel."
+msgstr "Повернення коштів PayU %s скасовано. Кошти не повернуто донору; перевірте пожертву в панелі продавця PayU."
+
+msgid "You will be redirected to PayU to complete the donation."
+msgstr "Вас буде перенаправлено на сторінку PayU для завершення пожертви."
+
+msgid "PayU gateway is not configured."
+msgstr "Платіжний шлюз PayU не налаштовано."
+
+msgid "PayU donations support only the PLN currency."
+msgstr "Пожертви через PayU підтримують лише валюту PLN."
+
+msgid "PayU order creation failed."
+msgstr "Не вдалося створити замовлення PayU."
+
+msgid "PayU order ID is missing for this donation. Refund the payment in the PayU merchant panel."
+msgstr "Для цієї пожертви відсутній ідентифікатор замовлення PayU. Поверніть кошти в панелі продавця PayU."
+
+msgid "Donation refund"
+msgstr "Повернення пожертви"
+
+msgid "PayU refund request failed. Refund the payment in the PayU merchant panel."
+msgstr "Запит на повернення коштів PayU не вдався. Поверніть кошти в панелі продавця PayU."
+
+#. translators: %s: PayU refund ID.
+msgid "PayU refund initiated (refund %s)."
+msgstr "Повернення коштів PayU ініційовано (повернення %s)."
+
+msgid "PayU refund initiated."
+msgstr "Повернення коштів PayU ініційовано."

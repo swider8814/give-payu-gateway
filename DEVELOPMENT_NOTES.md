@@ -9,7 +9,7 @@ Use these notes as a checklist when maintaining this gateway or creating another
 - Keep each payment provider in a separate plugin and repository.
 - Use a provider-specific plugin slug, text domain, option name, REST namespace and asset names.
 - Keep the Give gateway ID short and stable, for example `payu`.
-- Include `README.md`, `CHANGELOG.md`, `languages/*.pot`, `languages/*-pl_PL.po` and compiled `.mo`.
+- Include `README.md`, `CHANGELOG.md`, `languages/*.pot`, `languages/*-pl_PL.po`, `languages/*-uk.po` and their compiled `.mo` files.
 - Build release ZIP files with the plugin directory as the top-level folder.
 - Keep local release ZIP files in `dist/`, which is ignored by Git.
 
@@ -36,7 +36,8 @@ Donations > Settings > Payment Gateways
 - Show masked secret fields as `***` after save.
 - Add required field markers for required credentials.
 - Add a "test API access" action using PayU OAuth `client_credentials`.
-- Keep source strings in English and add Polish translations.
+- Keep source strings in English and add Polish and Ukrainian translations.
+- Name translation files by WordPress locale: `pl_PL` for Polish, but `uk` (not `uk_UA`) for Ukrainian.
 
 ## PayU Credentials
 

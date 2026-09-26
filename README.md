@@ -18,7 +18,7 @@ Stable release for one-time offsite donations:
 - donors returning from PayU are routed to the success or failed page based on the payment outcome
 - configurable payment description prefix
 - PayU logo in the payment method selector
-- English source strings with Polish translation
+- English source strings with Polish and Ukrainian translations
 - sandbox payment flow verified end to end
 - production payment verified end to end
 

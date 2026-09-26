@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 - 2026-09-26
+
+### Added
+
+- Ukrainian translation (`uk`).
+
 ## 1.0.0 - 2026-08-27
 
 First stable release. Sandbox and production payments verified end to end.
